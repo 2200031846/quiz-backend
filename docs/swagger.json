@@ -1,0 +1,323 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Quiz App API",
+    "description": "API Documentation for the Quiz Application",
+    "version": "1.0.0",
+    "contact": {
+      "name": "Developer",
+      "email": "developer@example.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:5000",
+      "description": "Local development server"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Users",
+      "description": "User authentication and management APIs"
+    },
+    {
+      "name": "Quizzes",
+      "description": "Quiz creation and management APIs"
+    }
+  ],
+  "paths": {
+    "/api/auth/register": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Register a new user",
+        "description": "Registers a new user in the database.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": { "type": "string" },
+                  "email": { "type": "string" },
+                  "password": { "type": "string" }
+                },
+                "required": ["name", "email", "password"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "User registered successfully" },
+          "400": { "description": "Validation error" }
+        }
+      }
+    },
+    "/api/auth/login": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Login user",
+        "description": "Authenticates a user and returns a JWT token.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": { "type": "string" },
+                  "password": { "type": "string" }
+                },
+                "required": ["email", "password"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User logged in successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": { "type": "string" },
+                    "user": {
+                      "type": "object",
+                      "properties": {
+                        "id": { "type": "integer" },
+                        "name": { "type": "string" },
+                        "email": { "type": "string" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": { "description": "Invalid email or password" },
+          "500": { "description": "Server error" }
+        }
+      }
+    },
+    "/api/users": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Get all users",
+        "description": "Retrieves a list of all registered users from the database.",
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved users",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": { "type": "integer" },
+                      "name": { "type": "string" },
+                      "email": { "type": "string" },
+                      "createdAt": { "type": "string", "format": "date-time" }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": { "description": "Server error" }
+        }
+      }
+    },
+    "/api/users/{id}": {
+      "delete": {
+        "tags": ["Users"],
+        "summary": "Delete a user",
+        "description": "Deletes a user from the database based on their ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of the user to delete",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": { "description": "User deleted successfully" },
+          "404": { "description": "User not found" },
+          "500": { "description": "Server error" }
+        }
+      },
+      "put": {
+        "tags": ["Users"],
+        "summary": "Update a user",
+        "description": "Updates user details in the database using their ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of the user to update",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": { "type": "string" },
+                  "email": { "type": "string" }
+                },
+                "required": ["name", "email"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "User updated successfully" },
+          "404": { "description": "User not found" },
+          "500": { "description": "Server error" }
+        }
+      }
+    },
+    "/api/quizzes": {
+      "post": {
+        "tags": ["Quizzes"],
+        "summary": "Create a new quiz",
+        "description": "Creates a quiz with a title, difficulty, questions, and a time limit.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": { "type": "string" },
+                  "difficulty": { "type": "string" },
+                  "questions": { "type": "integer" },
+                  "timeLimit": { "type": "integer" }
+                },
+                "required": ["title", "difficulty", "questions", "timeLimit"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Quiz created successfully" },
+          "400": { "description": "Validation error" }
+        }
+      },
+      "get": {
+        "tags": ["Quizzes"],
+        "summary": "Get all quizzes",
+        "description": "Retrieves a list of all quizzes.",
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved quizzes",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": { "type": "integer" },
+                      "title": { "type": "string" },
+                      "difficulty": { "type": "string" },
+                      "questions": { "type": "integer" },
+                      "timeLimit": { "type": "integer" }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": { "description": "Server error" }
+        }
+      }
+    },
+    "/api/quizzes/{id}": {
+      "get": {
+        "tags": ["Quizzes"],
+        "summary": "Get a quiz by ID",
+        "description": "Fetches details of a specific quiz using its ID.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": { "description": "Quiz details retrieved" },
+          "404": { "description": "Quiz not found" }
+        }
+      },
+      "put": {
+        "tags": ["Quizzes"],
+        "summary": "Update a quiz",
+        "description": "Updates an existing quiz's details.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": { "type": "string" },
+                  "difficulty": { "type": "string" },
+                  "questions": { "type": "integer" },
+                  "timeLimit": { "type": "integer" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Quiz updated successfully" },
+          "404": { "description": "Quiz not found" }
+        }
+      },
+      "delete": {
+        "tags": ["Quizzes"],
+        "summary": "Delete a quiz",
+        "description": "Deletes a quiz by ID.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": { "description": "Quiz deleted successfully" },
+          "404": { "description": "Quiz not found" }
+        }
+      }
+    }
+  }
+}
