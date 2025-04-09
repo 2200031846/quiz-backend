@@ -189,32 +189,7 @@
       }
     },
     "/api/quizzes": {
-      "post": {
-        "tags": ["Quizzes"],
-        "summary": "Create a new quiz",
-        "description": "Creates a quiz with a title, difficulty, questions, and a time limit.",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "title": { "type": "string" },
-                  "difficulty": { "type": "string" },
-                  "questions": { "type": "integer" },
-                  "timeLimit": { "type": "integer" }
-                },
-                "required": ["title", "difficulty", "questions", "timeLimit"]
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": { "description": "Quiz created successfully" },
-          "400": { "description": "Validation error" }
-        }
-      },
+
       "get": {
         "tags": ["Quizzes"],
         "summary": "Get all quizzes",
@@ -261,60 +236,6 @@
         ],
         "responses": {
           "200": { "description": "Quiz details retrieved" },
-          "404": { "description": "Quiz not found" }
-        }
-      },
-      "put": {
-        "tags": ["Quizzes"],
-        "summary": "Update a quiz",
-        "description": "Updates an existing quiz's details.",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "required": true,
-            "schema": {
-              "type": "integer"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "title": { "type": "string" },
-                  "difficulty": { "type": "string" },
-                  "questions": { "type": "integer" },
-                  "timeLimit": { "type": "integer" }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": { "description": "Quiz updated successfully" },
-          "404": { "description": "Quiz not found" }
-        }
-      },
-      "delete": {
-        "tags": ["Quizzes"],
-        "summary": "Delete a quiz",
-        "description": "Deletes a quiz by ID.",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "required": true,
-            "schema": {
-              "type": "integer"
-            }
-          }
-        ],
-        "responses": {
-          "200": { "description": "Quiz deleted successfully" },
           "404": { "description": "Quiz not found" }
         }
       }

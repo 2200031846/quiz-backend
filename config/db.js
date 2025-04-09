@@ -2,11 +2,18 @@ const { Sequelize } = require("sequelize");
 require("dotenv").config(); // Load environment variables
 
 // ✅ Initialize Sequelize
-const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASSWORD, {
-    host: process.env.DB_HOST,
+
+const sequelize = new Sequelize(process.env.MYSQL_URL, {
     dialect: "mysql",
-    logging: false,
-});
+    logging: false, // Optional: Disable logging
+  });
+
+  
+sequelize
+.authenticate()
+.then(() => console.log("✅ Database connected to Railway"))
+.catch((err) => console.error("❌ Database connection failed:", err));
+  
 
 const connectDB = async () => {
     try {
@@ -24,3 +31,6 @@ const connectDB = async () => {
 
 // ✅ Export sequelize and connectDB function
 module.exports = { sequelize, connectDB };
+
+
+
