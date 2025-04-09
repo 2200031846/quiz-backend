@@ -1,5 +1,5 @@
-// Existing imports and middleware
 const express = require("express");
+const cors = require("cors");
 const { sequelize, connectDB } = require("./config/db");
 const swaggerUi = require("swagger-ui-express");
 const swaggerDocument = require("./docs/swagger.json");
@@ -9,6 +9,9 @@ const quizRoutes = require("./routes/quizRoutes");
 
 const app = express();
 app.use(express.json());
+
+// Enable CORS for all routes
+app.use(cors());
 
 // Define a route handler for the root URL
 app.get("/", (req, res) => {
