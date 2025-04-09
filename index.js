@@ -21,7 +21,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument)); // Ensu
 // ✅ Start Server after DB Connection
 connectDB().then(() => {
     app.listen(5000, () => {
-        console.log("🚀 Server running on http://localhost:5000");
-        console.log("📄 Swagger Docs available at http://localhost:5000/api-docs"); // ✅ Add this log
+        console.log("🚀 Server running on http://quiz-backend-production-4024.up.railway.app");
+        console.log("📄 Swagger Docs available at http://quiz-backend-production-4024.up.railway.app/api-docs"); // ✅ Add this log
     });
 }).catch(err => console.error("❌ Server Startup Failed:", err));

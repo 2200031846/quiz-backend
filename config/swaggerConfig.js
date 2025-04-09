@@ -13,7 +13,7 @@ const swaggerOptions = {
             version: "1.0.0",
             contact: { name: "Developer", email: "developer@example.com" }
         },
-        servers: [{ url: "http://localhost:5000" }]
+        servers: [{ url: "http://quiz-backend-production-4024.up.railway.app" }]
     },
     apis: ["./routes/*.js"] // ✅ Scan all route files for documentation
 };
@@ -35,7 +35,7 @@ if (fs.existsSync(swaggerJsonPath)) {
 // ✅ Setup Swagger UI in Express App
 const setupSwagger = (app) => {
     app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-    console.log("✅ Swagger API Docs available at: http://localhost:5000/api-docs");
+    console.log("✅ Swagger API Docs available at: http://quiz-backend-production-4024.up.railway.app/api-docs");
 };
 
 module.exports = setupSwagger;
